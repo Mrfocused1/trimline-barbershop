@@ -1,0 +1,58 @@
+import { Service } from '@/types';
+
+export const mockServices: Service[] = [
+  {
+    id: 'svc-1',
+    name: 'Signature Fade',
+    description: 'Precision fade with hot towel finish and styling. Our most popular service featuring expert blending and attention to detail.',
+    durationMin: 45,
+    priceGBP: 30,
+    isActive: true,
+    displayOrder: 1,
+  },
+  {
+    id: 'svc-2',
+    name: 'Classic Cut',
+    description: 'Traditional barbering techniques for timeless styles. Includes consultation, cut, and style.',
+    durationMin: 30,
+    priceGBP: 20,
+    isActive: true,
+    displayOrder: 2,
+  },
+  {
+    id: 'svc-3',
+    name: 'Beard Trim & Shape',
+    description: 'Professional beard sculpting with hot towel treatment and conditioning. Perfect line-ups and shaping.',
+    durationMin: 30,
+    priceGBP: 15,
+    isActive: true,
+    displayOrder: 3,
+  },
+  {
+    id: 'svc-4',
+    name: 'Executive Package',
+    description: 'Complete grooming experience: signature cut, beard trim, hot towel shave, and facial treatment.',
+    durationMin: 90,
+    priceGBP: 80,
+    isActive: true,
+    displayOrder: 4,
+  },
+  {
+    id: 'svc-5',
+    name: 'Hot Towel Shave',
+    description: 'Luxury straight-razor shave with pre-shave oil, hot towels, and post-shave balm.',
+    durationMin: 45,
+    priceGBP: 35,
+    isActive: true,
+    displayOrder: 5,
+  },
+  {
+    id: 'svc-6',
+    name: 'Kids Cut (12 & Under)',
+    description: 'Professional cuts for young gentlemen in a comfortable, patient environment.',
+    durationMin: 25,
+    priceGBP: 10,
+    isActive: true,
+    displayOrder: 6,
+  },
+];

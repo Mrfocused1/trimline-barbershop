@@ -1,0 +1,58 @@
+import { Review } from '@/types';
+
+export const mockReviews: Review[] = [
+  {
+    id: 'rev-1',
+    clientName: 'David Chen',
+    rating: 5,
+    comment: 'Marcus is a true professional. Best fade I\'ve ever had! The attention to detail is incredible and the atmosphere is always welcoming.',
+    date: '2025-01-15',
+    isPublic: true,
+    serviceId: 'svc-1',
+  },
+  {
+    id: 'rev-2',
+    clientName: 'James Rodriguez',
+    rating: 5,
+    comment: 'Been coming here for over a year. Consistently excellent service every single time. The Executive Package is worth every penny!',
+    date: '2025-01-12',
+    isPublic: true,
+    serviceId: 'svc-4',
+  },
+  {
+    id: 'rev-3',
+    clientName: 'Michael Thompson',
+    rating: 5,
+    comment: 'The hot towel shave is an experience everyone should try. Marcus takes his time and makes you feel like royalty.',
+    date: '2025-01-08',
+    isPublic: true,
+    serviceId: 'svc-5',
+  },
+  {
+    id: 'rev-4',
+    clientName: 'Robert Taylor',
+    rating: 5,
+    comment: 'Clean shop, professional service, and great conversation. I always leave looking sharp and feeling confident.',
+    date: '2025-01-05',
+    isPublic: true,
+    serviceId: 'svc-1',
+  },
+  {
+    id: 'rev-5',
+    clientName: 'Anthony Williams',
+    rating: 5,
+    comment: 'My son loves getting his haircuts here. Marcus is patient and makes the whole experience fun for kids. Highly recommend!',
+    date: '2025-01-03',
+    isPublic: true,
+    serviceId: 'svc-6',
+  },
+  {
+    id: 'rev-6',
+    clientName: 'Christopher Lee',
+    rating: 5,
+    comment: 'Best beard trim in the city. The shaping and line-up work is precise and the hot towel treatment is relaxing.',
+    date: '2024-12-28',
+    isPublic: true,
+    serviceId: 'svc-3',
+  },
+];
