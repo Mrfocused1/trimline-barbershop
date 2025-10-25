@@ -93,12 +93,18 @@ export function RadialChairView({ chairs }: RadialChairViewProps) {
     }
   };
 
-  const toggleChair = (chairId: string, chair: Chair) => {
+  const toggleChair = (chairId: string, chair: Chair, chairIndex: number) => {
     if (expandedChairId === chairId) {
       setExpandedChairId(null);
       setAutoRotate(true);
       setShowProgressBar(false);
     } else {
+      // Calculate rotation needed to center this chair
+      // Chair should be at 0 degrees (right side, which is the front)
+      const currentAngle = (chairIndex / chairs.length) * 360;
+      const targetRotation = -currentAngle + 90; // 90 degrees puts it at top center
+
+      setRotationAngle(targetRotation);
       setExpandedChairId(chairId);
       setAutoRotate(false);
       // Trigger animation
@@ -179,11 +185,11 @@ export function RadialChairView({ chairs }: RadialChairViewProps) {
             return (
               <div
                 key={chair.id}
-                className={`absolute cursor-pointer ${autoRotate ? '' : 'transition-all duration-700'}`}
+                className={`absolute cursor-pointer transition-all ${autoRotate ? 'duration-0' : 'duration-700'}`}
                 style={nodeStyle}
                 onClick={(e) => {
                   e.stopPropagation();
-                  toggleChair(chair.id, chair);
+                  toggleChair(chair.id, chair, index);
                 }}
               >
                 {/* Chair Icon */}
