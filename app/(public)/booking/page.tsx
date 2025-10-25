@@ -141,17 +141,17 @@ function BookingPageContent() {
         <div className="container mx-auto px-4 max-w-4xl">
         {/* Progress Steps */}
         {bookingFlow.currentStep !== 'confirmation' && (
-          <Card className="mb-8 p-6">
-            <div className="flex items-center justify-between">
+          <Card className="mb-8 p-4 md:p-6">
+            <div className="flex items-center justify-between overflow-x-auto">
               {STEPS.filter((s) => s.key !== 'confirmation').map((step, index) => {
                 const isActive = step.key === bookingFlow.currentStep;
                 const isCompleted = index < currentStepIndex;
 
                 return (
-                  <div key={step.key} className="flex items-center">
+                  <div key={step.key} className="flex items-center flex-shrink-0">
                     <div className="flex flex-col items-center">
                       <div
-                        className={`flex h-10 w-10 items-center justify-center rounded-full border-2 transition-colors ${
+                        className={`flex h-8 w-8 md:h-10 md:w-10 items-center justify-center rounded-full border-2 transition-colors text-sm md:text-base ${
                           isActive
                             ? 'border-primary bg-primary text-white'
                             : isCompleted
@@ -161,12 +161,12 @@ function BookingPageContent() {
                       >
                         {index + 1}
                       </div>
-                      <span className={`mt-2 text-xs font-medium ${isActive ? 'text-foreground' : 'text-black'}`}>
+                      <span className={`mt-1 md:mt-2 text-[10px] md:text-xs font-medium whitespace-nowrap ${isActive ? 'text-foreground' : 'text-black'}`}>
                         {step.label}
                       </span>
                     </div>
                     {index < STEPS.length - 2 && (
-                      <div className={`mx-2 h-0.5 w-12 ${isCompleted ? 'bg-primary' : 'bg-muted-foreground/25'}`} />
+                      <div className={`mx-1 md:mx-2 h-0.5 w-6 md:w-12 flex-shrink-0 ${isCompleted ? 'bg-primary' : 'bg-muted-foreground/25'}`} />
                     )}
                   </div>
                 );
