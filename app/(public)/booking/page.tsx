@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { motion } from 'framer-motion';
@@ -27,7 +27,7 @@ const STEPS: { key: BookingStep; label: string }[] = [
   { key: 'confirmation', label: 'Confirmation' },
 ];
 
-export default function BookingPage() {
+function BookingPageContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const { getActiveServices } = useServiceStore();
@@ -251,5 +251,13 @@ export default function BookingPage() {
         </div>
       </motion.div>
     </>
+  );
+}
+
+export default function BookingPage() {
+  return (
+    <Suspense fallback={<LoadingScreen isLoading={true} />}>
+      <BookingPageContent />
+    </Suspense>
   );
 }
