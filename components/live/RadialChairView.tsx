@@ -51,22 +51,37 @@ export function RadialChairView({ chairs }: RadialChairViewProps) {
     return () => clearInterval(interval);
   }, []);
 
-  // Auto-rotation
+  // Auto-rotation with requestAnimationFrame for smooth 60fps
   useEffect(() => {
-    let rotationTimer: NodeJS.Timeout;
+    let animationFrameId: number;
+    let lastTimestamp = 0;
+
+    const animate = (timestamp: number) => {
+      if (!lastTimestamp) lastTimestamp = timestamp;
+      const delta = timestamp - lastTimestamp;
+
+      // Rotate at ~0.3 degrees per 50ms = 6 degrees per second
+      if (delta >= 16) { // ~60fps
+        setRotationAngle((prev) => {
+          const increment = (delta / 50) * 0.3;
+          const newAngle = (prev + increment) % 360;
+          return Number(newAngle.toFixed(2));
+        });
+        lastTimestamp = timestamp;
+      }
+
+      if (autoRotate) {
+        animationFrameId = requestAnimationFrame(animate);
+      }
+    };
 
     if (autoRotate) {
-      rotationTimer = setInterval(() => {
-        setRotationAngle((prev) => {
-          const newAngle = (prev + 0.3) % 360;
-          return Number(newAngle.toFixed(3));
-        });
-      }, 50);
+      animationFrameId = requestAnimationFrame(animate);
     }
 
     return () => {
-      if (rotationTimer) {
-        clearInterval(rotationTimer);
+      if (animationFrameId) {
+        cancelAnimationFrame(animationFrameId);
       }
     };
   }, [autoRotate]);
@@ -139,11 +154,11 @@ export function RadialChairView({ chairs }: RadialChairViewProps) {
           style={{ perspective: '1000px' }}
         >
           {/* Center - Barber Shop Icon */}
-          <div className="absolute w-20 h-20 rounded-full bg-white flex items-center justify-center z-10 shadow-lg shadow-black/30">
-            <div className="absolute w-24 h-24 rounded-full border border-black/20 animate-ping opacity-70"></div>
+          <div className="absolute w-20 h-20 rounded-full bg-white flex items-center justify-center z-10 shadow-lg shadow-black/30" style={{ transform: 'translate3d(0, 0, 0)' }}>
+            <div className="absolute w-24 h-24 rounded-full border border-black/20 animate-ping opacity-70" style={{ transform: 'translate3d(0, 0, 0)' }}></div>
             <div
               className="absolute w-28 h-28 rounded-full border border-black/10 animate-ping opacity-50"
-              style={{ animationDelay: '0.5s' }}
+              style={{ animationDelay: '0.5s', transform: 'translate3d(0, 0, 0)' }}
             ></div>
             <Scissors className="w-10 h-10 text-black" strokeWidth={1.5} />
           </div>
@@ -155,15 +170,16 @@ export function RadialChairView({ chairs }: RadialChairViewProps) {
             const currentCountdown = countdown[chair.id] || 0;
 
             const nodeStyle = {
-              transform: `translate(${position.x}px, ${position.y}px)`,
+              transform: `translate3d(${position.x}px, ${position.y}px, 0)`,
               zIndex: isExpanded ? 200 : position.zIndex,
               opacity: isExpanded ? 1 : position.opacity,
+              willChange: autoRotate ? 'transform, opacity' : 'auto',
             };
 
             return (
               <div
                 key={chair.id}
-                className="absolute transition-all duration-700 cursor-pointer"
+                className={`absolute cursor-pointer ${autoRotate ? '' : 'transition-all duration-700'}`}
                 style={nodeStyle}
                 onClick={(e) => {
                   e.stopPropagation();
