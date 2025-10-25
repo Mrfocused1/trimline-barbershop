@@ -86,33 +86,42 @@ export function ChairCard({ chair, onSelect, isSelected, isExpanded, onExpand }:
   const iconColor = getIconColor();
 
   return (
-    <div className="relative">
-      <button
-        className={cn(
-          'relative p-4 rounded-lg transition-all transform border-2',
-          'bg-white',
-          isSelected ? 'border-yellow-400' : isExpanded ? 'border-black' : 'border-gray-300',
-          'cursor-pointer hover:scale-110 hover:border-gray-400'
-        )}
-        onClick={() => {
-          onExpand(chair);
-          if (chair.status === 'available') {
-            onSelect(chair);
-          }
-        }}
-      >
-        <Armchair className={cn('h-8 w-8', iconColor)} />
-      </button>
+    <>
+      {/* Mobile backdrop overlay */}
+      {isExpanded && (
+        <div
+          className="fixed inset-0 bg-black/50 z-40 md:hidden"
+          onClick={() => onExpand(chair)}
+        />
+      )}
 
-      {/* Chair Number Label */}
-      <div className="text-center mt-1 text-xs font-medium text-black">
-        {chair.number}
-      </div>
+      <div className="relative">
+        <button
+          className={cn(
+            'relative p-4 rounded-lg transition-all transform border-2',
+            'bg-white',
+            isSelected ? 'border-yellow-400' : isExpanded ? 'border-black' : 'border-gray-300',
+            'cursor-pointer hover:scale-110 hover:border-gray-400'
+          )}
+          onClick={() => {
+            onExpand(chair);
+            if (chair.status === 'available') {
+              onSelect(chair);
+            }
+          }}
+        >
+          <Armchair className={cn('h-8 w-8', iconColor)} />
+        </button>
 
-      {/* Expanded Details for Occupied Chairs */}
-      {isExpanded && chair.status === 'occupied' && chair.currentBooking && (
-        <Card className="absolute top-full left-1/2 -translate-x-1/2 mt-2 w-72 bg-white backdrop-blur-lg border-black/20 shadow-xl overflow-visible z-50">
-          <div className="absolute -top-3 left-1/2 -translate-x-1/2 w-px h-3 bg-black/50"></div>
+        {/* Chair Number Label */}
+        <div className="text-center mt-1 text-xs font-medium text-black">
+          {chair.number}
+        </div>
+
+        {/* Expanded Details for Occupied Chairs */}
+        {isExpanded && chair.status === 'occupied' && chair.currentBooking && (
+          <Card className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[90vw] max-w-72 bg-white backdrop-blur-lg border-black/20 shadow-xl overflow-visible z-50 md:absolute md:top-full md:left-1/2 md:-translate-x-1/2 md:translate-y-0 md:mt-2 md:w-72">
+            <div className="absolute -top-3 left-1/2 -translate-x-1/2 w-px h-3 bg-black/50 hidden md:block"></div>
           <CardHeader className="pb-3">
             <div className="flex justify-between items-center mb-2">
               <Badge className="bg-red-500 text-white border-red-400">
@@ -170,8 +179,8 @@ export function ChairCard({ chair, onSelect, isSelected, isExpanded, onExpand }:
 
       {/* Expanded Details for Available Chairs */}
       {isExpanded && chair.status === 'available' && (
-        <Card className="absolute top-full left-1/2 -translate-x-1/2 mt-2 w-64 bg-white backdrop-blur-lg border-black/20 shadow-xl overflow-visible z-50">
-          <div className="absolute -top-3 left-1/2 -translate-x-1/2 w-px h-3 bg-black/50"></div>
+        <Card className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[90vw] max-w-64 bg-white backdrop-blur-lg border-black/20 shadow-xl overflow-visible z-50 md:absolute md:top-full md:left-1/2 md:-translate-x-1/2 md:translate-y-0 md:mt-2 md:w-64">
+          <div className="absolute -top-3 left-1/2 -translate-x-1/2 w-px h-3 bg-black/50 hidden md:block"></div>
           <CardHeader className="pb-3">
             <div className="flex justify-between items-center mb-2">
               <Badge className="bg-green-500 text-white border-green-400">
@@ -195,6 +204,7 @@ export function ChairCard({ chair, onSelect, isSelected, isExpanded, onExpand }:
           </CardContent>
         </Card>
       )}
-    </div>
+      </div>
+    </>
   );
 }
